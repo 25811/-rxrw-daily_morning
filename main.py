@@ -22,7 +22,7 @@ def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
   info = res['data']['list'][0]
-  return info['date'],info['weather'],math.floor(info['temp']),info['humidity'],info['wind'],info['low'],info['high'],info['airQuality']
+  return info['date'],info['weather'],math.floor(info['temp']),info['humidity'],info['wind'],math.floor(info['low']),math.floor(info['high']),info['airQuality']
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -48,6 +48,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 day,wea, temperature,humidity,wind,low,high,airQuality = get_weather()
-data = {"date":{"value":day},"weather":{"value":wea},"humidity":{"value":humidity, "color":get_random_color()},"temperature":{"value":temperature, "color":get_random_color()},"low":{"value":low},"high":{"value":high},"wind":{"value":wind},"airQuality":{"value":airQuality, "color":get_random_color()},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"date":{"value":day,"color":get_random_color()},"weather":{"value":wea},"humidity":{"value":humidity, "color":get_random_color()},"temperature":{"value":temperature, "color":get_random_color()},"low":{"value":low},"high":{"value":high},"wind":{"value":wind},"airQuality":{"value":airQuality, "color":get_random_color()},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
