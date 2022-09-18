@@ -21,9 +21,7 @@ template_id = os.environ["TEMPLATE_ID"]
 def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
-
   info = res['data']['list'][0]
-
   return info['date'],info['weather'],math.floor(info['temp']),info['humidity'],info['wind'],info['low'],info['high'],info['airQuality']
 
 def get_count():
